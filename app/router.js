@@ -7,10 +7,11 @@ const router = new Router();
 
 const defaultRouter = combineRouters( router);
 
-router.get('/ultra', selectController);
+router.get('/ultra', selectController);     // bus api
 router.post('/create', insertController);
+
 router.get('/fetch',selectControllerSignup );
-router.post('/signup',insertControllerSignup);
+router.post('/signup',insertControllerSignup);  //sign up api
 
 
 

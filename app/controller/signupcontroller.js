@@ -1,4 +1,5 @@
 import { insertserviceSignup,selectserviceSignup } from "../service/signupservice.js";
+
 export const selectControllerSignup = async(ctx) => {
 
     try{
@@ -29,7 +30,7 @@ export const selectControllerSignup = async(ctx) => {
       //const {mobile, name, email} = params; 
 
       //const response = await insertservice("mobile" :"123456789", "name" : "chandan", "email" : "abc12@gmail.com", "college" : "rit", "city" : "blr", "gender" : "male");
-      const response = await insertserviceSignup(user_id, first_name, first_name, password, mobile, email, gender);
+      const response = await insertserviceSignup(user_id, first_name, last_name, password, mobile, email, gender);
       ctx.status = 200;
       ctx.body = response;
     }

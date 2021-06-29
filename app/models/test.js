@@ -48,12 +48,11 @@ export const insertLoginUser = async(bus_no, source, desti , bus_name, departure
       client.release();
   }
 }
+
+
+
 //  insertLoginUser(1001,"Banglore","Mumbai","dulex bus","12:00 pm","6h 30m","4.5","7","400");
-//  insertLoginUser(1002,"Banglore","Mumbai","dulex bus","12:00 pm","6h 30m","4.5","7","400");
-//  insertLoginUser(1003,"Banglore","Mumbai","dulex bus","12:00 pm","6h 30m","4.5","7","400");
-//  insertLoginUser(1004,"Banglore","Mumbai","dulex bus","12:00 pm","6h 30m","4.5","7","400");
- //   insertLoginUser(000,"Banglore","Mumbai","dulex bus","12:00 pm","6h 30m","4.5","7","400");
- //insertLoginUser(1015,"Banglore","Mumbai","dulex bus","6h 30m","4.5","7","400");
+
 
 export const selectLoginUser = async() => {
   const client = await pool.connect();
