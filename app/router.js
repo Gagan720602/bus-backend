@@ -1,13 +1,17 @@
 import Router from 'koa-router';
 import combineRouters from 'koa-combine-routers';
 import { selectController, insertController } from './controller/testcontroller.js';
+import { selectControllerSignup ,insertControllerSignup } from './controller/signupcontroller.js'
 
 const router = new Router();
 
 const defaultRouter = combineRouters( router);
 
-router.get('/peace', selectController);
+router.get('/ultra', selectController);
+router.post('/create', insertController);
+router.get('/fetch',selectControllerSignup );
+router.post('/signup',insertControllerSignup);
 
-//router.post('/create', insertController);
+
 
 export default defaultRouter;

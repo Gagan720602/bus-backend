@@ -6,10 +6,18 @@ export const selectservice = async()=>{
     return response;
 }
 
-export const insertservice  = async(mobile,name,email,college,city,gender)=>{
-    let response = await insertLoginUser(mobile, name, email,college,city,gender)
+export const insertservice  = async(bus_no, source, desti, bus_name, departure, duration, rating, seats, fare) => {
+   try{
+    let response = await insertLoginUser(bus_no, source, desti, bus_name, departure, duration, rating, seats, fare)
+    
+
     console.log(response);
     return response;
+   }
+   catch(e)
+   {
+       console.log(e.message)
+   }
 }
 
-selectservice();
+//selectservice();

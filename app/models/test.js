@@ -5,15 +5,15 @@ import {psqlConfig} from '../config/postgresConfig.js';
 const pool = new Pool({
     connectionString: psqlConfig,
   });
+
 pool.on('error', (error)=>{
     console.info("Unexpected error on idle client",error);
     process.exit(-1);
 })
-
 export const createTestDB = async() => {
     const client = await pool.connect();
-    
-    let query = 'create table booking_info(mobile varchar(13) primary key, name varchar(50), email varchar(50), college varchar(50), city varchar(50), gender varchar(50))';
+
+    let query = 'create table bus_info(bus_no varchar(5) primary key , source varchar(20) , desti varchar(20), bus_name varchar(20), departure varchar(10), duration varchar(10), rating varchar(10) ,seats varchar(5), fare varchar(10))';
   
     try{
       let resp =  await client.query(query)
@@ -21,62 +21,59 @@ export const createTestDB = async() => {
       return resp;
     }
     catch(e){
-        
-        return false;
-    }finally {
-        client.release();
-    }
-  }
-createTestDB();
-export const insertLoginUser = async(mobile, name, email, college, city, gender) => {
-    const client = await pool.connect();
-    
-    let query = `INSERT INTO booking_info(mobile, name, email, college, city, gender ) VALUES('${mobile}', '${name}', '${email}', '${college}', '${city}', '${gender}'  ) RETURNING *`;
+      console.log(e.message)
+      return false;
 
-    try{
-      let resp =  await client.query(query)
-      console.log(resp);
-      return {success : true , data: resp.rows[0]};;
     }
-    catch(e){
-          let message="some error occured";
-        return {success : false , message};
-    }finally {
-        client.release();
-    }
-  }
-   insertLoginUser(9591557009,"Gagan","gagan.r@gmail.com","JNNCE","shimoga","male");
-   insertLoginUser(7987562133,"chandan kumar","chandan.kr8413@gmail.com","PESIT","banglore","male");
-   insertLoginUser(9846565613,"iswarya","iswarya@gmail.com","Dayanada sagar","banglore","female");
-  export const selectLoginUser = async() => {
-    const client = await pool.connect();
-    
-    let query = `SELECT * FROM booking_info   `;
-    try{
-        let resp =  await client.query(query)
-       console.log(resp.rows);
-        return {success : true , data: resp.rows};;
-     }
-    catch(e){
-           let message = "Some Error occured"
-           return {success : false , message};
-        }
     finally {
         client.release();
     }
+}
+//createTestDB()
+export const insertLoginUser = async(bus_no, source, desti , bus_name, departure,  duration, rating, seats, fare) => {
+  const client = await pool.connect();
+  
+  let query = `INSERT INTO bus_info(bus_no, source, desti , bus_name, departure,  duration, rating, seats, fare) VALUES('${bus_no}', '${source}', '${desti}', '${bus_name}','${departure}', '${duration}', '${rating}','${seats}', '${fare}'  ) RETURNING *`;
+
+  try{
+    let resp =  await client.query(query)
+    console.log(resp);
+    return { success : true , data: resp.rows };
   }
+  catch(e){
+    console.log(e.message)
+        let message="some error not peace";
+      return { success : false , message };
+  }finally {
+      client.release();
+  }
+}
+//  insertLoginUser(1001,"Banglore","Mumbai","dulex bus","12:00 pm","6h 30m","4.5","7","400");
+//  insertLoginUser(1002,"Banglore","Mumbai","dulex bus","12:00 pm","6h 30m","4.5","7","400");
+//  insertLoginUser(1003,"Banglore","Mumbai","dulex bus","12:00 pm","6h 30m","4.5","7","400");
+//  insertLoginUser(1004,"Banglore","Mumbai","dulex bus","12:00 pm","6h 30m","4.5","7","400");
+ //   insertLoginUser(000,"Banglore","Mumbai","dulex bus","12:00 pm","6h 30m","4.5","7","400");
+ //insertLoginUser(1015,"Banglore","Mumbai","dulex bus","6h 30m","4.5","7","400");
+
+export const selectLoginUser = async() => {
+  const client = await pool.connect();
   
-  
-  selectLoginUser();
+  let query = `SELECT * FROM bus_info `;
+  try{
+      let resp =  await client.query(query)
+     console.log(resp.rows);
+      return {success : true , data: resp.rows};;
+   }
+  catch(e){
+         let message = "Some Error occured"
+         return {success : false , message};
+      }
+  finally {
+      client.release();
+  }
+}
 
 
+// selectLoginUser();
 
 
-
-
-  //insertLoginUser('7903039306',)
-
-
-  
-
-   //createTestDB();
