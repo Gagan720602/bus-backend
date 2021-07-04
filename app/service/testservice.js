@@ -1,5 +1,18 @@
 import { selectLoginUser, insertLoginUser } from '../models/test.js';
 
+import pkg from 'pg';
+const {Pool} = pkg;
+import {psqlConfig} from '../config/postgresConfig.js';
+
+const pool = new Pool({
+    connectionString: psqlConfig,
+  });
+pool.on('error', (error)=>{
+    console.info("Unexpected error on idle client",error);
+    process.exit(-1);
+})
+
+
 export const selectservice = async()=>{
     let response = await selectLoginUser()
     console.log(response);
@@ -21,3 +34,21 @@ export const insertservice  = async(bus_no, source, desti, bus_name, departure, 
 }
 
 //selectservice();
+
+export  const locService =async (source,desti) =>{
+    const client = await pool.connect();
+    
+    let query=`SELECT * FROM bus_info WHERE source = '${source}' AND desti='${desti}'`;
+     
+
+    try{
+        let resp =  await client.query(query)
+       console.log(resp);
+        return resp; 
+      }
+      catch(e)
+      {
+          console.log(e.message)
+      }
+
+}

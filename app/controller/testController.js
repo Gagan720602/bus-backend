@@ -1,4 +1,4 @@
-import { insertservice,selectservice } from "../service/testservice.js";
+import { insertservice,selectservice ,locService } from "../service/testservice.js";
 export const selectController = async(ctx) => {
 
     try{
@@ -39,5 +39,22 @@ export const selectController = async(ctx) => {
       console.log('p')
       ctx.status = 500;
       ctx.body = { success : false, message: e.message };
+    }
+  }
+
+  export const locController= async(ctx) =>{
+    try{
+      const params = ctx.request.body;
+        console.log('direction',params)
+      const source= params.source
+      const desti =params.desti
+      const response =await locService(source,desti)
+      ctx.status = 200;
+      ctx.body = response;
+    }
+    catch(e){
+        console.log(e.message)
+        ctx.status = 500;
+        ctx.body = { success : false, message: e.message };
     }
   }

@@ -1,3 +1,5 @@
+
+
 import pkg from 'pg';
 const {Pool} = pkg;
 import {psqlConfig} from '../config/postgresConfig.js';
@@ -37,10 +39,11 @@ export const insertLoginUserSignup = async(user_id, first_name, last_name ,passw
   try{
     let resp =  await client.query(query)
     console.log(resp);
-    return {success : true , data: resp.rows[0]};;
+    return {success : true , data: resp.rows};
   }
   catch(e){
-        let message="some error occured";
+    
+        let message=e.message;
       return {success : false , message};
   }finally {
       client.release();
