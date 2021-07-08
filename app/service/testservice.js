@@ -51,4 +51,44 @@ export  const locService =async (source,desti) =>{
           console.log(e.message)
       }
 
+
+}
+
+//===============================================================book=====================================//
+export  const bookService =async (bus,seat) =>{
+    const client = await pool.connect();
+    
+    let query=`UPDATE bus_info SET seats='${seat}' where bus_no='${bus}'`;
+     
+
+    try{
+        let resp =  await client.query(query)
+       console.log(resp);
+        return resp; 
+      }
+      catch(e)
+      {
+          console.log(e.message)
+      }
+
+}
+
+//==========================================fetch book seats service================================================//
+export  const seatinfo =async (bus) =>{
+    const client = await pool.connect();
+    
+    let query=`SELECT * FROM bus_info WHERE bus_no = '${bus}' `;
+     
+
+    try{
+        let resp =  await client.query(query)
+       console.log(resp);
+        return resp; 
+      }
+      catch(e)
+      {
+          console.log(e.message)
+      }
+
+
 }

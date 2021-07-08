@@ -1,4 +1,4 @@
-import { insertservice,selectservice ,locService } from "../service/testservice.js";
+import { insertservice,selectservice ,locService ,bookService, seatinfo} from "../service/testservice.js";
 export const selectController = async(ctx) => {
 
     try{
@@ -58,3 +58,41 @@ export const selectController = async(ctx) => {
         ctx.body = { success : false, message: e.message };
     }
   }
+
+//===============================================================book tickets============================================================//
+  export const bookTickets= async(ctx) =>{
+    try{
+      const params = ctx.request.body;
+        console.log('book',params)
+      const bus= params.bus
+      const seat =params.seat
+
+      const response =await bookService(bus,seat)
+      ctx.status = 200;
+      ctx.body = response;
+    }
+    catch(e){
+        console.log(e.message)
+        ctx.status = 500;
+        ctx.body = { success : false, message: e.message };
+    }
+  }
+
+//===================================================fetch bus seats=========================================================//
+export const updateinfo= async(ctx) =>{
+  try{
+    const params = ctx.request.body;
+      console.log('seats info',params)
+    const bus= params.bus
+    
+    const response =await seatinfo(bus)
+    ctx.status = 200;
+    ctx.body = response;
+  }
+  catch(e){
+      console.log(e.message)
+      ctx.status = 500;
+      ctx.body = { success : false, message: e.message };
+  }
+}
+
